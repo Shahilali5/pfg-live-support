@@ -70,13 +70,29 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'demo', 'index.html'));
 });
 
-// Direct convenient static routes
-app.get('/widget.js', (req, res) => {
+// Direct convenient static routes & aliases to prevent 404s under any reverse-proxy or path configuration
+app.get(['/widget.js', '/public/widget.js'], (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'widget.js'));
 });
 
-app.get('/widget.css', (req, res) => {
+app.get(['/widget.css', '/public/widget.css'], (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'widget.css'));
+});
+
+app.get(['/admin.css', '/admin/admin.css'], (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, 'admin', 'admin.css'));
+});
+
+app.get(['/admin.js', '/admin/admin.js'], (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, 'admin', 'admin.js'));
+});
+
+app.get(['/demo.css', '/demo/demo.css'], (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, 'demo', 'demo.css'));
+});
+
+app.get(['/docs.css', '/docs/docs.css'], (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, 'docs', 'docs.css'));
 });
 
 app.use(express.static(PUBLIC_DIR));
