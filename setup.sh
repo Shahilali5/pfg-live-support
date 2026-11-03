@@ -109,28 +109,115 @@ EOF
     echo -e "  ./setup.sh start   (or 'npm start')\n"
 }
 
-# 3. Start Server
-start_app() {
-    log_info "Starting PFG Live Support..."
+# Helper: Kill any process holding the target port
+kill_port_process() {
+    local port=$1
+    log_info "Checking if port $port is already occupied..."
+
+    # 1. Stop PM2 process if registered
     if command -v pm2 &> /dev/null; then
-        pm2 start server/server.js --name "pfg-support"
-        log_success "Started with PM2 process manager."
+        pm2 stop "pfg-support" &> /dev/null || true
+        pm2 delete "pfg-support" &> /dev/null || true
+    fi
+
+    # 2. Linux / macOS: lsof
+    if command -v lsof &> /dev/null; then
+        local pids
+        pids=$(lsof -ti :"$port" 2>/dev/null || true)
+        if [ -n "$pids" ]; then
+            log_warn "Port $port is occupied by PID(s): $pids. Killing old process..."
+            echo "$pids" | xargs -r kill -9 2>/dev/null || true
+            sleep 1
+        fi
+    fi
+
+    # 3. Linux: fuser
+    if command -v fuser &> /dev/null; then
+        fuser -k -n tcp "$port" 2>/dev/null || true
+    fi
+
+    # 4. Windows / Git Bash / WSL: netstat.exe & taskkill.exe
+    if command -v netstat.exe &> /dev/null && command -v taskkill.exe &> /dev/null; then
+        local win_pids
+        win_pids=$(netstat.exe -ano | grep ":$port " | awk '{print $5}' | tr -d '\r' | sort -u)
+        for wpid in $win_pids; do
+            if [ -n "$wpid" ] && [ "$wpid" != "0" ]; then
+                log_warn "Port $port is occupied on Windows by PID $wpid. Terminating..."
+                taskkill.exe //F //PID "$wpid" &>/dev/null || taskkill.exe /F /PID "$wpid" &>/dev/null || true
+            fi
+        done
+    fi
+
+    # 5. Kill any hanging server/server.js node processes
+    pkill -f "server/server.js" 2>/dev/null || true
+
+    sleep 1
+    log_success "Port $port is clear and ready."
+}
+
+# 3. Start Server with Port Prompt and Process Killer
+start_app() {
+    local default_port="3000"
+    if [ -f .env ]; then
+        local env_port
+        env_port=$(grep -E '^PORT=' .env 2>/dev/null | cut -d'=' -f2 | tr -d '\r' | tr -d ' ')
+        if [ -n "$env_port" ]; then
+            default_port="$env_port"
+        fi
+    fi
+
+    local target_port="$default_port"
+
+    # If running interactively, prompt user for port
+    if [ -t 0 ] || [ -n "$PROMPT_PORT" ]; then
+        echo -e ""
+        echo -ne "${YELLOW}[?] Enter port to run PFG Live Support [Press Enter for default: ${default_port}]: ${NC}"
+        read -r user_input_port
+        if [ -n "$user_input_port" ]; then
+            target_port="$user_input_port"
+        fi
+    fi
+
+    # Terminate any old process occupying this port
+    kill_port_process "$target_port"
+
+    # Persist chosen port into .env
+    if [ -f .env ]; then
+        if grep -q "^PORT=" .env; then
+            sed -i "s/^PORT=.*/PORT=$target_port/" .env 2>/dev/null || sed -i '' "s/^PORT=.*/PORT=$target_port/" .env 2>/dev/null || true
+        else
+            echo "PORT=$target_port" >> .env
+        fi
+    fi
+
+    export PORT="$target_port"
+    log_info "Launching PFG Live Support on port $target_port..."
+
+    if command -v pm2 &> /dev/null; then
+        PORT="$target_port" pm2 start server/server.js --name "pfg-support" --update-env
+        log_success "Started with PM2 process manager on port $target_port."
+        pm2 logs "pfg-support" --lines 15
     else
-        log_info "PM2 not found. Starting with Node.js..."
-        npm start
+        log_info "Starting directly with Node.js on port $target_port..."
+        PORT="$target_port" node server/server.js
     fi
 }
 
 # 4. Stop Server
 stop_app() {
-    log_info "Stopping server..."
+    log_info "Stopping server processes..."
     if command -v pm2 &> /dev/null; then
-        pm2 stop "pfg-support" || true
+        pm2 stop "pfg-support" &> /dev/null || true
         log_success "PM2 process stopped."
-    else
-        pkill -f "server/server.js" || true
-        log_success "Process stopped."
     fi
+
+    # Read port from .env and kill
+    local cur_port="3000"
+    if [ -f .env ]; then
+        cur_port=$(grep -E '^PORT=' .env 2>/dev/null | cut -d'=' -f2 | tr -d '\r' | tr -d ' ' || echo "3000")
+    fi
+    kill_port_process "${cur_port:-3000}"
+    log_success "All server processes stopped."
 }
 
 # 5. Restart Server
