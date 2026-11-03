@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PFG Live Support - Developer API & WebSocket Documentation</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="docs.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="docs-header">
+    <div class="header-inner">
+      <div class="brand">
+        <a href="/" class="brand-link">
+          <div class="logo-shield">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <span class="brand-name">PFG Live Support</span>
+          <span class="badge-version">v1.0.0 API Docs</span>
+        </a>
+      </div>
+
+      <div class="header-links">
+        <a href="/" class="nav-item"><i class="bi bi-display"></i> Demo Portal</a>
+        <a href="/admin" class="nav-item"><i class="bi bi-shield-lock"></i> Admin Console</a>
+        <a href="https://github.com/shahilali5/pfg-live-support" target="_blank" class="nav-btn-gh">
+          <img src="https://github.com/shahilali5.png" alt="Shahil Ali" style="width:20px;height:20px;border-radius:50%;margin-right:4px;">
+          <span>@shahilali5</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Docs Layout -->
+  <div class="docs-layout">
+    <!-- Sidebar Navigation -->
+    <nav class="docs-sidebar">
+      <div class="sidebar-search">
+        <i class="bi bi-search"></i>
+        <input type="text" id="apiSearch" placeholder="Search endpoints or events...">
+      </div>
+
+      <div class="nav-section">
+        <div class="section-title">GETTING STARTED</div>
+        <a href="#overview" class="doc-link active">Overview & Architecture</a>
+        <a href="#authentication" class="doc-link">Authentication & Security</a>
+        <a href="#base-url" class="doc-link">Base URLs & Protocols</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="section-title">WIDGET INTEGRATION</div>
+        <a href="#embed-script" class="doc-link">Single-Line Script Embed</a>
+        <a href="#widget-attributes" class="doc-link">HTML Data Attributes</a>
+        <a href="#javascript-api" class="doc-link">Window JavaScript API</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="section-title">PUBLIC & SETTINGS API</div>
+        <a href="#get-public-config" class="doc-link"><span class="badge-method get">GET</span> /api/public/config</a>
+        <a href="#get-admin-settings" class="doc-link"><span class="badge-method get">GET</span> /api/admin/settings</a>
+        <a href="#put-admin-settings" class="doc-link"><span class="badge-method put">PUT</span> /api/admin/settings</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="section-title">CUSTOMER CHAT API</div>
+        <a href="#post-customer-session" class="doc-link"><span class="badge-method post">POST</span> /api/customer/session</a>
+        <a href="#get-customer-messages" class="doc-link"><span class="badge-method get">GET</span> /api/customer/conv/:id</a>
+        <a href="#post-customer-rating" class="doc-link"><span class="badge-method post">POST</span> /api/customer/rating</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="section-title">ADMIN & AGENT API</div>
+        <a href="#post-auth-login" class="doc-link"><span class="badge-method post">POST</span> /api/auth/login</a>
+        <a href="#get-auth-me" class="doc-link"><span class="badge-method get">GET</span> /api/auth/me</a>
+        <a href="#get-admin-conversations" class="doc-link"><span class="badge-method get">GET</span> /api/admin/conversations</a>
+        <a href="#get-admin-conv-details" class="doc-link"><span class="badge-method get">GET</span> /api/admin/conv/:id</a>
+        <a href="#post-admin-conv-status" class="doc-link"><span class="badge-method post">POST</span> /api/admin/status</a>
+        <a href="#post-admin-conv-assign" class="doc-link"><span class="badge-method post">POST</span> /api/admin/assign</a>
+        <a href="#post-admin-conv-notes" class="doc-link"><span class="badge-method post">POST</span> /api/admin/notes</a>
+        <a href="#get-admin-analytics" class="doc-link"><span class="badge-method get">GET</span> /api/admin/analytics</a>
+        <a href="#get-admin-export" class="doc-link"><span class="badge-method get">GET</span> /api/admin/export</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="section-title">FILE UPLOADS</div>
+        <a href="#post-upload" class="doc-link"><span class="badge-method post">POST</span> /api/upload</a>
+      </div>
+
+      <div class="nav-section">
+        <div class="section-title">REAL-TIME WEBSOCKETS</div>
+        <a href="#ws-overview" class="doc-link">Socket.IO Handshake & Rooms</a>
+        <a href="#ws-client-events" class="doc-link">Client -> Server Events</a>
+        <a href="#ws-server-events" class="doc-link">Server -> Client Events</a>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="docs-content">
+      <!-- Section: Overview -->
+      <section id="overview" class="doc-block">
+        <h1>PFG Live Support API & WebSocket Documentation</h1>
+        <p class="lead">Complete reference manual for the PFG Live Support REST endpoints, real-time Socket.IO events, and white-label widget embedding system.</p>
+
+        <div class="callout note">
+          <div class="callout-title"><i class="bi bi-info-circle-fill"></i> Bank-Grade Security Standards</div>
+          <p>This system strictly prohibits requesting or transmitting sensitive credentials including UPI PINs, CVVs, OTPs, or passwords. All user inputs are sanitized against XSS payloads and rate-limited.</p>
+        </div>
+
+        <h3>Architecture Overview</h3>
+        <p>PFG Live Support utilizes a hybrid HTTP + WebSocket duplex model:</p>
+        <ul>
+          <li><strong>REST API</strong>: Session bootstrap, historical retrieval, file uploads, agent authentication, and analytics.</li>
+          <li><strong>Socket.IO (WSS)</strong>: Real-time two-way messaging, typing indicators, presence, and read receipt updates.</li>
+        </ul>
+      </section>
+
+      <!-- Section: Authentication -->
+      <section id="authentication" class="doc-block">
+        <h2>Authentication & Authorization</h2>
+        <p>Agent and administrator endpoints require a JSON Web Token (JWT) provided in the HTTP <code>Authorization</code> header:</p>
+        <div class="code-box">
+          <pre><code>Authorization: Bearer &lt;YOUR_AGENT_JWT_TOKEN&gt;</code></pre>
+        </div>
+        <p>Customer endpoints are authenticated via a cryptographically random <code>sessionToken</code> stored securely in the browser's <code>localStorage</code>.</p>
+      </section>
+
+      <!-- Section: Embed Script -->
+      <section id="embed-script" class="doc-block">
+        <h2>Single-Line Embed Script</h2>
+        <p>You can embed PFG Live Support onto any website, payment checkout portal, or web app with a single script tag:</p>
+
+        <div class="code-box">
+          <div class="code-box-header">
+            <span>HTML Integration</span>
+            <button class="copy-btn" onclick="copySnippet('embedCode')">Copy</button>
+          </div>
+          <pre><code id="embedCode">&lt;script
+  src="http://localhost:3000/widget.js"
+  data-site-id="pfg_gateway_default"
+  async&gt;
+&lt;/script&gt;</code></pre>
+        </div>
+
+        <h3 id="widget-attributes">Supported HTML Data Attributes</h3>
+        <table class="api-table">
+          <thead>
+            <tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>data-site-id</code></td><td>string</td><td><code>pfg_gateway_default</code></td><td>Unique merchant/site identifier.</td></tr>
+            <tr><td><code>data-company-name</code></td><td>string</td><td>From Server</td><td>Override company title in widget header.</td></tr>
+            <tr><td><code>data-logo-url</code></td><td>string</td><td>Shield Vector</td><td>Custom logo image URL for widget avatar.</td></tr>
+            <tr><td><code>data-primary-color</code></td><td>hex string</td><td><code>#4F46E5</code></td><td>Primary theme color (e.g. <code>#2563EB</code>).</td></tr>
+            <tr><td><code>data-position</code></td><td>string</td><td><code>right</code></td><td>Screen placement: <code>right</code> or <code>left</code>.</td></tr>
+            <tr><td><code>data-security-notice</code></td><td>string</td><td>Default Banner</td><td>Custom banking warning banner text.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="javascript-api">Global Window JavaScript API</h3>
+        <p>Interact with the live widget programmatically from your web application:</p>
+        <div class="code-box">
+          <pre><code>// Open chat window
+window.PFGChat.open();
+
+// Close chat window
+window.PFGChat.close();
+
+// Toggle visibility
+window.PFGChat.toggle();
+
+// Send automated message (e.g. on transaction failure)
+window.PFGChat.sendMessage("Transaction failed: ERR_UPI_EXPIRED");
+
+// Dynamically override branding configuration
+window.PFGChat.setConfig({
+  company_name: "Apex Pay",
+  brand_color: "#059669",
+  position: "left"
+});</code></pre>
+        </div>
+      </section>
+
+      <!-- REST Endpoint: Public Config -->
+      <section id="get-public-config" class="doc-block">
+        <div class="endpoint-header">
+          <span class="badge-method get">GET</span>
+          <span class="endpoint-path">/api/public/config</span>
+        </div>
+        <p>Retrieves public branding, colors, security notice, and quick replies for the customer widget without requiring authentication.</p>
+
+        <h4>Query Parameters</h4>
+        <table class="api-table">
+          <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>siteId</code></td><td>string</td><td>No</td><td>Site identifier (defaults to <code>pfg_gateway_default</code>).</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Response (200 OK)</h4>
+        <div class="code-box">
+          <pre><code>{
+  "success": true,
+  "siteId": "pfg_gateway_default",
+  "config": {
+    "company_name": "PFG Support",
+    "logo_url": "",
+    "tagline": "Online • Typically replies instantly",
+    "brand_color": "#4F46E5",
+    "header_gradient": "linear-gradient(135deg, #0A1128 0%, #1E1B4B 100%)",
+    "position": "right",
+    "security_notice": "PFG Security Note: We will never ask for your UPI PIN, OTP, CVV, or passwords.",
+    "welcome_title": "👋 Welcome to Live Support",
+    "welcome_subtitle": "Need help with payment status or API credentials?",
+    "quick_replies": [
+      { "label": "💳 Payment issue", "text": "I need help with my payment status." },
+      { "label": "⚡ API integration", "text": "I have an API integration question." }
+    ]
+  }
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- REST Endpoint: Customer Session -->
+      <section id="post-customer-session" class="doc-block">
+        <div class="endpoint-header">
+          <span class="badge-method post">POST</span>
+          <span class="endpoint-path">/api/customer/session</span>
+        </div>
+        <p>Initializes a new customer session or resumes an existing one, retrieving conversation history.</p>
+
+        <h4>Request Body</h4>
+        <div class="code-box">
+          <pre><code>{
+  "siteId": "pfg_gateway_default",
+  "sessionToken": "cust_sess_xxxxxxxxxxxx", // Optional: leave null for new visitors
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "metadata": {
+    "url": "https://pfg-gateway.io/checkout",
+    "amount": 4999
+  }
+}</code></pre>
+        </div>
+
+        <h4>Response (200 OK)</h4>
+        <div class="code-box">
+          <pre><code>{
+  "success": true,
+  "customer": {
+    "customerId": "cust_a94f83b2",
+    "sessionToken": "cust_sess_498b31a84c...",
+    "name": "Jane Doe",
+    "email": "jane@example.com"
+  },
+  "conversation": {
+    "conversationId": "conv_92b1a80c",
+    "status": "open",
+    "department": "Payments",
+    "assignedAgentId": null
+  },
+  "messages": []
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- REST Endpoint: Agent Login -->
+      <section id="post-auth-login" class="doc-block">
+        <div class="endpoint-header">
+          <span class="badge-method post">POST</span>
+          <span class="endpoint-path">/api/auth/login</span>
+        </div>
+        <p>Authenticates support agents and returns a signed JWT token.</p>
+
+        <h4>Request Body</h4>
+        <div class="code-box">
+          <pre><code>{
+  "email": "admin@pfg.com",
+  "password": "admin123"
+}</code></pre>
+        </div>
+
+        <h4>Response (200 OK)</h4>
+        <div class="code-box">
+          <pre><code>{
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "agent": {
+    "agent_id": "agent_pfg_admin",
+    "name": "PFG Senior Support",
+    "email": "admin@pfg.com",
+    "role": "admin",
+    "department": "Payments"
+  }
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- REST Endpoint: Admin Conversations -->
+      <section id="get-admin-conversations" class="doc-block">
+        <div class="endpoint-header">
+          <span class="badge-method get">GET</span>
+          <span class="endpoint-path">/api/admin/conversations</span>
+        </div>
+        <p>Lists all customer conversations with unread badges, last message previews, and filter criteria.</p>
+        <p><strong>Headers:</strong> <code>Authorization: Bearer &lt;TOKEN&gt;</code></p>
+        <p><strong>Query Parameters:</strong> <code>status</code> (all/open/pending/resolved), <code>department</code>, <code>search</code>.</p>
+      </section>
+
+      <!-- REST Endpoint: File Upload -->
+      <section id="post-upload" class="doc-block">
+        <div class="endpoint-header">
+          <span class="badge-method post">POST</span>
+          <span class="endpoint-path">/api/upload</span>
+        </div>
+        <p>Uploads a payment receipt, screenshot, or document. Enforces strict MIME whitelist screening and 10MB file limit.</p>
+
+        <h4>Request (multipart/form-data)</h4>
+        <div class="code-box">
+          <pre><code>curl -X POST http://localhost:3000/api/upload \
+  -F "file=@payment_receipt.png"</code></pre>
+        </div>
+
+        <h4>Response (200 OK)</h4>
+        <div class="code-box">
+          <pre><code>{
+  "success": true,
+  "file": {
+    "fileName": "payment_receipt.png",
+    "fileUrl": "/uploads/pfg_1730658900_a81f3d.png",
+    "fileSize": 245102,
+    "mimeType": "image/png"
+  }
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- Real-Time WebSocket Section -->
+      <section id="ws-overview" class="doc-block">
+        <h2>Real-Time WebSocket Protocol (Socket.IO)</h2>
+        <p>Socket.IO connects directly at <code>ws://localhost:3000</code> with auto-reconnection and heartbeat detection.</p>
+
+        <h3 id="ws-client-events">Client to Server Events</h3>
+        <table class="api-table">
+          <thead><tr><th>Event Name</th><th>Payload</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>customer:join_conversation</code></td>
+              <td><code>{ conversationId, sessionToken }</code></td>
+              <td>Customer joins their private conversation room.</td>
+            </tr>
+            <tr>
+              <td><code>agent:join_conversation</code></td>
+              <td><code>{ conversationId }</code></td>
+              <td>Agent joins a customer conversation room to monitor/reply.</td>
+            </tr>
+            <tr>
+              <td><code>message:send</code></td>
+              <td><code>{ conversationId, text, clientMsgId, attachment, isInternal }</code></td>
+              <td>Sends a message. Deduplicated by clientMsgId.</td>
+            </tr>
+            <tr>
+              <td><code>typing:start</code></td>
+              <td><code>{ conversationId }</code></td>
+              <td>Signals that the user started typing.</td>
+            </tr>
+            <tr>
+              <td><code>typing:stop</code></td>
+              <td><code>{ conversationId }</code></td>
+              <td>Signals that the user stopped typing.</td>
+            </tr>
+            <tr>
+              <td><code>message:delivered</code></td>
+              <td><code>{ messageId, conversationId }</code></td>
+              <td>Acknowledges message receipt.</td>
+            </tr>
+            <tr>
+              <td><code>conversation:seen</code></td>
+              <td><code>{ conversationId }</code></td>
+              <td>Marks all unread messages as seen (blue checks).</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="ws-server-events">Server to Client Broadcast Events</h3>
+        <table class="api-table">
+          <thead><tr><th>Event Name</th><th>Payload</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>message:new</code></td>
+              <td><code>{ conversationId, message }</code></td>
+              <td>Broadcasts newly posted message to conversation participants.</td>
+            </tr>
+            <tr>
+              <td><code>internal_note:new</code></td>
+              <td><code>{ conversationId, note }</code></td>
+              <td>Sent <strong>only</strong> to support agents (never exposed to customers).</td>
+            </tr>
+            <tr>
+              <td><code>agent:typing</code></td>
+              <td><code>{ conversationId, agentName, isTyping }</code></td>
+              <td>Indicates agent typing status.</td>
+            </tr>
+            <tr>
+              <td><code>customer:typing</code></td>
+              <td><code>{ conversationId, isTyping }</code></td>
+              <td>Indicates customer typing status.</td>
+            </tr>
+            <tr>
+              <td><code>settings:updated</code></td>
+              <td><code>{ siteId, settings }</code></td>
+              <td>Live white-label branding update broadcast to all open widgets.</td>
+            </tr>
+            <tr>
+              <td><code>messages:seen</code></td>
+              <td><code>{ conversationId, seenBy }</code></td>
+              <td>Updates read receipts to blue double checks.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function copySnippet(id) {
+      const code = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(code);
+      alert('Code copied to clipboard!');
+    }
+
+    // Simple search filtering
+    document.getElementById('apiSearch').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('.doc-link').forEach(link => {
+        const text = link.innerText.toLowerCase();
+        link.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

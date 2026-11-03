@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PFG Gateway - Modern Payment Infrastructure</title>
+  <link rel="stylesheet" href="demo.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span>🛡️ <strong>PFG Live Support System</strong> is actively running. Test live chatting with the widget on the bottom-right!</span>
+    <a href="/admin" target="_blank" class="admin-quick-link">Open Admin Console ↗</a>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-shield">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+        </div>
+        <span class="brand-name">PFG Gateway</span>
+        <span class="badge-fintech">Fintech 2.0</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#checkout">Checkout Demo</a>
+        <a href="#api">API & Webhooks</a>
+        <a href="#embed">Widget Integration</a>
+        <a href="/admin" target="_blank" class="nav-btn-admin">Agent Dashboard ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-pill">⚡ Instant Settlements & 99.99% Uptime</div>
+        <h1>Next-Gen Payment Gateway with Built-in Real-Time Live Support</h1>
+        <p>Accept cards, UPI, net banking, and cross-border payments with zero friction. Equipped with bank-grade security and instant customer chat assistance.</p>
+
+        <div class="hero-actions">
+          <button class="btn-hero-primary" onclick="window.PFGChat && window.PFGChat.open()">
+            💬 Test Customer Chat Widget
+          </button>
+          <a href="/admin" target="_blank" class="btn-hero-secondary">
+            🛡️ Open Admin Console
+          </a>
+        </div>
+
+        <div class="hero-badges">
+          <span>✓ PCI-DSS Level 1 Compliant</span>
+          <span>✓ Real-time WebSockets</span>
+          <span>✓ End-to-End Encryption</span>
+        </div>
+      </div>
+
+      <!-- Simulated Merchant Checkout Card -->
+      <div class="checkout-card" id="checkout">
+        <div class="checkout-header">
+          <div class="checkout-brand">
+            <span class="merchant-dot"></span>
+            <strong>Apex SaaS Technologies</strong>
+          </div>
+          <span class="order-id">INV #9482-PFG</span>
+        </div>
+
+        <div class="checkout-price">
+          <span class="currency">₹</span>
+          <span class="amount">4,999</span>
+          <span class="period">/ annual pro plan</span>
+        </div>
+
+        <div class="payment-methods">
+          <button class="method-btn active">⚡ UPI / QR</button>
+          <button class="method-btn">💳 Cards</button>
+          <button class="method-btn">🏦 NetBanking</button>
+        </div>
+
+        <div class="upi-box">
+          <div class="qr-mock">
+            <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3zm2 2v4h4V5zm8-2h8v8h-8zm2 2v4h4V5zM3 13h8v8H3zm2 2v4h4v-4zm13-2h3v2h-3zm-3 2h2v3h-2zm3 3h3v3h-3zm-3 2h2v1h-2zm-2-7h2v2h-2zm4 0h1v2h-1zm-2 5h1v1h-1z"/></svg>
+          </div>
+          <div class="upi-info">
+            <div class="upi-id">pfg.apex@icici</div>
+            <p>Scan with any UPI app (GPay, PhonePe, Paytm)</p>
+          </div>
+        </div>
+
+        <button class="btn-pay" onclick="simulateFailedPayment()">
+          Pay ₹4,999 Securely
+        </button>
+
+        <div class="security-footer">
+          🔒 256-Bit SSL Encrypted • PFG Live Protection
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Embed Instructions & Feature Highlights -->
+  <section class="integration-section" id="embed">
+    <div class="section-container">
+      <div class="section-badge">INTEGRATION IN 30 SECONDS</div>
+      <h2>Embed Anywhere With A Single Script Tag</h2>
+      <p>Works flawlessly across React, Next.js, Vue, Shopify, WordPress, or plain HTML without conflicting with host website styles.</p>
+
+      <div class="code-box">
+        <div class="code-header">
+          <span>HTML Integration</span>
+          <button class="copy-btn" onclick="copySnippet()">Copy Code</button>
+        </div>
+        <pre><code id="embedSnippet">&lt;!-- Place this script before the closing &lt;/body&gt; tag --&gt;
+&lt;script
+  src="http://localhost:3000/widget.js"
+  data-site-id="pfg_gateway_default"
+  async&gt;
+&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feat-icon">⚡</div>
+          <h3>WebSocket Bidirectional Chat</h3>
+          <p>Instant two-way messaging with sub-100ms latency, automatic reconnect backoff, and heartbeat monitoring.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">🛡️</div>
+          <h3>Bank-Grade Security</h3>
+          <p>Strict MIME type upload screening, XSS sanitization, rate-limiting, and automatic warnings against sharing UPI PINs or OTPs.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">📑</div>
+          <h3>Multi-Agent Admin Inbox</h3>
+          <p>Assign chats to departments (Payments, Tech, Account), private internal team notes, canned responses, and analytics.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">✓✓</div>
+          <h3>Read Receipts & Typing</h3>
+          <p>Real-time typing feedback, sent/delivered/seen status badges, image attachments preview, and audio chimes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="portal-footer">
+    <div class="footer-container" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="https://github.com/shahilali5" target="_blank" style="display:flex;align-items:center;gap:8px;color:#a5b4fc;text-decoration:none;font-weight:600;">
+        <img src="https://github.com/shahilali5.png" alt="Shahil Ali" style="width:24px;height:24px;border-radius:50%;">
+        <span>Built by Shahil Ali (@shahilali5)</span>
+      </a>
+      <span>•</span>
+      <span>Open Source MIT License</span>
+      <span>•</span>
+      <a href="/docs" style="color:#94a3b8;text-decoration:none;">API Documentation</a>
+      <span>•</span>
+      <a href="https://github.com/shahilali5/pfg-live-support" target="_blank" style="color:#94a3b8;text-decoration:none;">GitHub Repository</a>
+    </div>
+  </footer>
+
+  <script>
+    function copySnippet() {
+      const code = document.getElementById('embedSnippet').innerText;
+      navigator.clipboard.writeText(code);
+      alert('Code snippet copied to clipboard!');
+    }
+
+    function simulateFailedPayment() {
+      if (window.PFGChat) {
+        window.PFGChat.open();
+        window.PFGChat.sendMessage('Hi, I need assistance with transaction INV #9482-PFG for ₹4,999. Can you verify if my UPI payment succeeded?');
+      }
+    }
+  </script>
+
+  <!-- =========================================================================
+       LIVE EMBEDDABLE PFG WIDGET SCRIPT
+       ========================================================================= -->
+  <script src="/widget.js" data-site-id="pfg_gateway_default" async></script>
+</body>
+</html>

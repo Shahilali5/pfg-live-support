@@ -1,0 +1,42 @@
+{
+  "name": "pfg-live-support",
+  "version": "1.0.0",
+  "description": "PFG Live Support – Real-Time WebSocket Chat System for Payment Gateways & SaaS",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "test": "node tests/test-runner.js"
+  },
+  "keywords": [
+    "chat",
+    "live-support",
+    "websocket",
+    "socket.io",
+    "payment-gateway",
+    "pfg",
+    "customer-support"
+  ],
+  "author": "Shahil Ali <https://github.com/shahilali5>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shahilali5/pfg-live-support.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shahilali5/pfg-live-support/issues"
+  },
+  "homepage": "https://github.com/shahilali5/pfg-live-support#readme",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.3",
+    "socket.io": "^4.8.1",
+    "uuid": "^10.0.0"
+  }
+}

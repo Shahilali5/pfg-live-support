@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PFG Live Support - Agent Console & Brand Customizer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- LOGIN MODAL / VIEW -->
+  <div id="loginView" class="login-container">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo-shield">
+          <i class="bi bi-shield-lock-fill" style="font-size: 26px; color: #ffffff;"></i>
+        </div>
+        <h2>PFG Support Console</h2>
+        <p>Enter your agent credentials to access live conversations</p>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label><i class="bi bi-envelope"></i> Agent Email</label>
+          <input type="email" id="loginEmail" placeholder="admin@pfg.com" required value="admin@pfg.com">
+        </div>
+        <div class="form-group">
+          <label><i class="bi bi-key"></i> Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required value="admin123">
+        </div>
+
+        <button type="submit" class="btn-primary" id="loginSubmitBtn">
+          <i class="bi bi-box-arrow-in-right"></i> Sign In to Console
+        </button>
+
+        <div class="demo-creds-hint">
+          <span>⚡ Demo Agent:</span>
+          <code>admin@pfg.com</code> / <code>admin123</code>
+        </div>
+        <div id="loginError" class="login-error" style="display: none;"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN DASHBOARD -->
+  <div id="dashboardView" class="dashboard-layout" style="display: none;">
+    <!-- LEFT SIDEBAR / INBOX -->
+    <aside class="sidebar">
+      <!-- App Header -->
+      <div class="brand-header">
+        <div class="brand-title">
+          <div class="logo-shield small" id="sidebarLogoShield">
+            <i class="bi bi-shield-check" style="font-size: 18px; color: #ffffff;"></i>
+          </div>
+          <div>
+            <h3 id="sidebarBrandTitle">PFG Support</h3>
+            <span class="live-tag"><span class="pulse-dot"></span> Live WSS</span>
+          </div>
+        </div>
+
+        <div class="header-nav-actions">
+          <a href="https://github.com/shahilali5" target="_blank" class="btn-icon" title="Maintainer GitHub (@shahilali5)">
+            <i class="bi bi-github"></i>
+          </a>
+          <a href="/docs" target="_blank" class="btn-icon" title="Interactive API Docs">
+            <i class="bi bi-journal-code"></i>
+          </a>
+          <button class="btn-icon" id="logoutBtn" title="Sign Out">
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Switcher (Inbox vs Brand Customizer) -->
+      <div class="sidebar-tab-switcher">
+        <button class="side-tab active" id="tabInboxBtn">
+          <i class="bi bi-chat-dots-fill"></i> Live Inbox
+        </button>
+        <button class="side-tab" id="tabSettingsBtn">
+          <i class="bi bi-sliders"></i> Brand Customizer
+        </button>
+      </div>
+
+      <!-- Agent Info -->
+      <div class="agent-profile-card">
+        <div class="agent-avatar" id="agentAvatar">
+          <img src="https://github.com/shahilali5.png" alt="Shahil Ali" style="width:100%;height:100%;border-radius:10px;object-fit:cover;">
+        </div>
+        <div class="agent-info">
+          <div class="agent-name" id="agentName">Shahil Ali</div>
+          <div class="agent-role" id="agentRole">Platform Lead</div>
+        </div>
+        <div class="online-status-badge">
+          <span class="status-indicator-dot online"></span> Online
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-value" id="kpiOpen">0</div>
+          <div class="kpi-label">Open Tickets</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="kpiAvgTime">&lt; 1m</div>
+          <div class="kpi-label">Avg Response</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value" id="kpiRating">4.9 ★</div>
+          <div class="kpi-label">CSAT Score</div>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="inbox-controls" id="inboxControlsWrap">
+        <div class="search-wrap">
+          <i class="bi bi-search search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search customer, ID, or text...">
+        </div>
+
+        <div class="filter-pills" id="statusFilterPills">
+          <button class="filter-pill active" data-status="all">All</button>
+          <button class="filter-pill" data-status="open">Open</button>
+          <button class="filter-pill" data-status="pending">Pending</button>
+          <button class="filter-pill" data-status="resolved">Resolved</button>
+        </div>
+
+        <div class="dept-select-wrap">
+          <select id="deptFilterSelect">
+            <option value="all">All Departments</option>
+            <option value="Payments">Payments</option>
+            <option value="Technical Support">Technical Support</option>
+            <option value="Account Support">Account Support</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Conversation List -->
+      <div class="conversation-list" id="conversationList">
+        <div class="empty-list">Loading conversations...</div>
+      </div>
+    </aside>
+
+    <!-- CENTER CHAT STREAM (INBOX VIEW) -->
+    <main class="chat-main" id="chatMain">
+      <div class="no-selection" id="noSelectionView">
+        <div class="empty-state-icon"><i class="bi bi-chat-square-text"></i></div>
+        <h3>No Conversation Selected</h3>
+        <p>Select a customer chat thread from the left to start responding in real time.</p>
+      </div>
+
+      <div class="active-chat-container" id="activeChatView" style="display: none;">
+        <!-- Thread Header -->
+        <header class="thread-header">
+          <div class="customer-title-group">
+            <h2 id="threadCustomerName">Customer Name</h2>
+            <div class="thread-meta">
+              <span class="customer-tag" id="threadCustomerId">cust_xxx</span>
+              <span class="dept-tag" id="threadDepartment">Payments</span>
+              <span class="site-tag" id="threadSiteId">pfg_gateway_default</span>
+            </div>
+          </div>
+
+          <div class="thread-actions">
+            <!-- Status Dropdown -->
+            <select class="status-select" id="threadStatusSelect">
+              <option value="open">🟢 Open</option>
+              <option value="pending">🟡 Pending</option>
+              <option value="resolved">⚪ Resolved</option>
+            </select>
+
+            <!-- Agent Assign Dropdown -->
+            <select class="agent-select" id="threadAssignSelect">
+              <option value="">Assign Agent...</option>
+            </select>
+
+            <!-- Export -->
+            <button class="btn-secondary" id="exportTranscriptBtn" title="Export Transcript">
+              <i class="bi bi-file-earmark-arrow-down"></i> Export
+            </button>
+          </div>
+        </header>
+
+        <!-- Messages View -->
+        <div class="chat-stream" id="chatStream">
+          <!-- Messages rendered here -->
+        </div>
+
+        <!-- Customer Typing Bar -->
+        <div class="customer-typing-bar" id="customerTypingBar" style="display: none;">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span id="customerTypingName">Customer is typing...</span>
+        </div>
+
+        <!-- Reply Composer Area -->
+        <div class="composer-area">
+          <!-- Mode Tabs & Quick Replies Macro -->
+          <div class="composer-toolbar">
+            <div class="mode-tabs">
+              <button class="mode-tab active" id="modeReplyBtn"><i class="bi bi-reply-fill"></i> Reply to Customer</button>
+              <button class="mode-tab" id="modeNoteBtn"><i class="bi bi-lock-fill"></i> Private Note</button>
+            </div>
+
+            <div class="canned-select-wrap">
+              <select id="cannedResponseSelect">
+                <option value="">⚡ Canned Responses...</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Input Box & Actions -->
+          <div class="composer-input-wrap">
+            <textarea id="composerTextarea" placeholder="Type reply (Enter to send, Shift+Enter for newline)..." rows="3"></textarea>
+
+            <div class="composer-footer">
+              <div class="composer-attachments">
+                <input type="file" id="adminFileInput" style="display: none;" accept="image/*,.pdf,.txt,.json">
+                <button class="btn-tool" id="adminAttachBtn" title="Attach file or transaction slip">
+                  <i class="bi bi-paperclip"></i> Attach
+                </button>
+                <span id="attachmentFileName" class="att-name-preview"></span>
+              </div>
+
+              <div class="composer-actions">
+                <button class="btn-primary" id="adminSendBtn">
+                  <i class="bi bi-send-fill"></i> Send <span id="sendModeLabel">Reply</span> ↵
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT CUSTOMER INTELLIGENCE PANEL -->
+    <aside class="right-drawer" id="rightDrawer" style="display: none;">
+      <div class="drawer-header">
+        <h4>Customer Profile</h4>
+        <button class="btn-icon" id="toggleDrawerBtn"><i class="bi bi-x-lg"></i></button>
+      </div>
+
+      <div class="drawer-content">
+        <!-- Customer Badge -->
+        <div class="customer-card-mini">
+          <div class="customer-avatar-big" id="profileInitials">C</div>
+          <h3 id="profileName">Customer Name</h3>
+          <p id="profileEmail">customer@example.com</p>
+        </div>
+
+        <!-- Metadata Attributes -->
+        <div class="profile-section">
+          <h5>SESSION CONTEXT</h5>
+          <div class="meta-item">
+            <span class="meta-label">IP Address</span>
+            <span class="meta-val" id="profileIp">127.0.0.1</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">User Agent</span>
+            <span class="meta-val" id="profileUserAgent">Chrome / Windows</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Current Page</span>
+            <span class="meta-val" id="profilePageUrl">-</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Session ID</span>
+            <span class="meta-val" id="profileSessionId">-</span>
+          </div>
+        </div>
+
+        <!-- CSAT Rating / Feedback -->
+        <div class="profile-section" id="csatSection">
+          <h5>CUSTOMER RATING</h5>
+          <div class="csat-rating-display" id="profileCsat">-</div>
+          <p class="csat-feedback-text" id="profileFeedback"></p>
+        </div>
+
+        <!-- Team Notes History -->
+        <div class="profile-section">
+          <h5>INTERNAL NOTES</h5>
+          <div class="internal-notes-list" id="internalNotesList">
+            <div class="empty-notes">No private notes yet.</div>
+          </div>
+        </div>
+
+        <!-- Security Reminder Card -->
+        <div class="security-card">
+          <div class="sec-title"><i class="bi bi-shield-shaded"></i> Security Protocol</div>
+          <p>Never request customer UPI PINs, CVV, OTPs, or net banking passwords. Report suspicious activities.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- SETTINGS & WHITE-LABEL CUSTOMIZATION STUDIO VIEW -->
+    <main class="settings-main" id="settingsMain" style="display: none;">
+      <div class="settings-container">
+        <!-- Form Column -->
+        <div class="settings-form-col">
+          <div class="settings-header">
+            <div>
+              <h2>Brand Customizer & White-Label Studio</h2>
+              <p>Customize company name, logos, theme colors, position, and quick replies for your chat widget.</p>
+            </div>
+            <button class="btn-primary save-btn-top" id="saveSettingsBtn">
+              <i class="bi bi-check2-circle"></i> Save & Broadcast Live
+            </button>
+          </div>
+
+          <div id="settingsAlert" class="settings-alert" style="display: none;"></div>
+
+          <!-- Section 1: Branding -->
+          <div class="config-card">
+            <h3><i class="bi bi-brush-fill"></i> Brand Identity</h3>
+            <div class="config-grid">
+              <div class="config-group">
+                <label>Company / Support Name</label>
+                <input type="text" id="setCompanyName" placeholder="e.g. Acme Support">
+              </div>
+              <div class="config-group">
+                <label>Logo Image URL</label>
+                <input type="text" id="setLogoUrl" placeholder="https://example.com/logo.png (leave blank for shield vector)">
+              </div>
+              <div class="config-group full-width">
+                <label>Header Tagline / Subtitle</label>
+                <input type="text" id="setTagline" placeholder="Online • Typically replies instantly">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Colors & Positioning -->
+          <div class="config-card">
+            <h3><i class="bi bi-palette-fill"></i> Colors & Positioning</h3>
+            <div class="config-grid">
+              <div class="config-group">
+                <label>Primary Brand Color</label>
+                <div class="color-picker-row">
+                  <input type="color" id="setColorPicker" value="#4F46E5">
+                  <input type="text" id="setBrandColor" placeholder="#4F46E5" value="#4F46E5">
+                </div>
+              </div>
+              <div class="config-group">
+                <label>Launcher Button Position</label>
+                <select id="setPositionSelect">
+                  <option value="right">Bottom Right (Standard)</option>
+                  <option value="left">Bottom Left</option>
+                </select>
+              </div>
+              <div class="config-group full-width">
+                <label>Header Background Gradient (CSS syntax)</label>
+                <input type="text" id="setHeaderGradient" placeholder="linear-gradient(135deg, #0A1128 0%, #1E1B4B 100%)">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Messages & Security Notice -->
+          <div class="config-card">
+            <h3><i class="bi bi-chat-quote-fill"></i> Greeting & Security</h3>
+            <div class="config-grid">
+              <div class="config-group full-width">
+                <label>Welcome Card Title</label>
+                <input type="text" id="setWelcomeTitle" placeholder="👋 Welcome to Support">
+              </div>
+              <div class="config-group full-width">
+                <label>Welcome Card Description</label>
+                <textarea id="setWelcomeSubtitle" rows="2" placeholder="How can our team help you today?"></textarea>
+              </div>
+              <div class="config-group full-width">
+                <label>Security Notice Warning Banner</label>
+                <textarea id="setSecurityNotice" rows="2" placeholder="PFG Security Note: We will never ask for your UPI PIN, OTP, CVV, or passwords."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Quick Reply FAQ Pills -->
+          <div class="config-card">
+            <h3><i class="bi bi-lightning-charge-fill"></i> Quick Reply FAQ Shortcuts</h3>
+            <p class="config-desc">These pills appear in the customer's welcome card for one-click questions.</p>
+            
+            <div class="pills-list-manager" id="pillsManagerList">
+              <!-- Dynamically populated pills -->
+            </div>
+
+            <div class="add-pill-row">
+              <input type="text" id="newPillLabel" placeholder="Pill Label (e.g. 💳 Payment issue)">
+              <input type="text" id="newPillText" placeholder="Full message sent on click (e.g. I need help with payment status)">
+              <button class="btn-secondary" id="addPillBtn">
+                <i class="bi bi-plus-circle-fill"></i> Add Pill
+              </button>
+            </div>
+          </div>
+
+          <!-- Section 5: Integration Embed Code -->
+          <div class="config-card">
+            <h3><i class="bi bi-code-slash"></i> Single-Line Embed Script</h3>
+            <p class="config-desc">Copy this script tag into your website's HTML before the closing <code>&lt;/body&gt;</code> tag:</p>
+            <div class="embed-code-wrap">
+              <pre><code id="liveEmbedCode">&lt;script src="http://localhost:3000/widget.js" data-site-id="pfg_gateway_default" async&gt;&lt;/script&gt;</code></pre>
+              <button class="btn-secondary copy-embed-btn" id="copyEmbedBtn">
+                <i class="bi bi-clipboard"></i> Copy
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Preview Mockup Column -->
+        <div class="settings-preview-col">
+          <div class="preview-sticky-wrap">
+            <div class="preview-header-label">
+              <span><i class="bi bi-eye"></i> LIVE WIDGET PREVIEW</span>
+              <span class="preview-note">Updates as you edit</span>
+            </div>
+
+            <!-- Mini Mockup Widget -->
+            <div class="mockup-widget" id="mockWidget">
+              <div class="mock-header" id="mockHeader">
+                <div class="mock-avatar" id="mockAvatar">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+                <div>
+                  <div class="mock-title" id="mockTitle">PFG Support</div>
+                  <div class="mock-sub" id="mockTagline">Online • Typically replies instantly</div>
+                </div>
+              </div>
+
+              <div class="mock-security" id="mockSecurity">
+                <i class="bi bi-shield-exclamation"></i>
+                <span id="mockSecText">PFG Security Note: We will never ask for your UPI PIN, OTP, CVV, or passwords.</span>
+              </div>
+
+              <div class="mock-body">
+                <div class="mock-welcome">
+                  <h5 id="mockWelcomeH5">👋 Welcome to Live Support</h5>
+                  <p id="mockWelcomeP">Need help? Choose a quick option below:</p>
+                  <div class="mock-pills" id="mockPills">
+                    <!-- Pills live preview -->
+                  </div>
+                </div>
+
+                <div class="mock-bubble customer">
+                  Hi, I have a question about my transaction.
+                </div>
+                <div class="mock-bubble agent" id="mockAgentBubble">
+                  Hello! How can we assist you today?
+                </div>
+              </div>
+
+              <div class="mock-footer">
+                <div class="mock-input">Type your message...</div>
+                <div class="mock-send-btn" id="mockSendBtn">
+                  <i class="bi bi-send-fill"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Launcher Mockup Preview -->
+            <div class="mock-launcher-preview">
+              <span>Launcher Button:</span>
+              <div class="mock-launcher-btn" id="mockLauncherBtn">
+                <i class="bi bi-chat-dots-fill"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
