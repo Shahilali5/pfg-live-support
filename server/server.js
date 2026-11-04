@@ -16,6 +16,9 @@ const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
 
 const app = express();
+
+// Trust reverse proxy (Nginx, Cloudflare) for accurate client IPs and secure cookies
+app.set('trust proxy', 1);
 const server = http.createServer(app);
 
 const PORT = parseInt(process.env.PORT, 10) || 3000;
@@ -48,6 +51,7 @@ const generalLimiter = rateLimit({
   max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS, 10) || 200,
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
   message: { success: false, error: 'Too many requests, please try again shortly.' }
 });
 app.use('/api/', generalLimiter);
