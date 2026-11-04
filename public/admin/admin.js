@@ -750,6 +750,22 @@
     });
 
     // Status Change
+    
+    // Quick Resolve Button
+    const quickResolveBtn = document.getElementById('quickResolveBtn');
+    if (quickResolveBtn) {
+      quickResolveBtn.addEventListener('click', async () => {
+        if (!state.currentConversationId) return;
+        document.getElementById('threadStatusSelect').value = 'resolved';
+        await apiFetch(`/api/admin/conversation/${state.currentConversationId}/status`, {
+          method: 'POST',
+          body: JSON.stringify({ status: 'resolved' })
+        });
+        loadConversations();
+        loadAnalytics();
+      });
+    }
+
     document.getElementById('threadStatusSelect').addEventListener('change', async (e) => {
       if (!state.currentConversationId) return;
       const status = e.target.value;

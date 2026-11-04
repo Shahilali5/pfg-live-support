@@ -698,3 +698,175 @@
     height: 100vh;
   }
 }
+
+
+/* CSAT Rating Card Popup */
+.pfg-csat-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin: 12px 0 6px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  animation: pfgSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@keyframes pfgSlideUp {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.pfg-csat-badge {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pfg-csat-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+.pfg-csat-subtitle {
+  font-size: 12.5px;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.pfg-csat-stars {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.pfg-csat-star {
+  background: none;
+  border: none;
+  font-size: 30px;
+  line-height: 1;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.15s ease;
+  user-select: none;
+  padding: 0 2px;
+}
+
+.pfg-csat-star:hover,
+.pfg-csat-star.active {
+  color: #f59e0b;
+  transform: scale(1.22);
+  text-shadow: 0 2px 10px rgba(245, 158, 11, 0.35);
+}
+
+.pfg-csat-level {
+  font-size: 12px;
+  font-weight: 600;
+  color: #b45309;
+  min-height: 18px;
+  margin-bottom: 10px;
+}
+
+.pfg-csat-textarea {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-family: inherit;
+  color: #0f172a;
+  background: #ffffff;
+  outline: none;
+  resize: none;
+  transition: border-color 0.2s;
+  margin-bottom: 10px;
+}
+
+.pfg-csat-textarea:focus {
+  border-color: #6366f1;
+}
+
+.pfg-csat-submit-btn {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  transition: all 0.2s;
+}
+
+.pfg-csat-submit-btn:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+}
+
+.pfg-csat-done {
+  padding: 14px 10px;
+}
+
+.pfg-csat-done-icon {
+  font-size: 32px;
+  margin-bottom: 6px;
+}
+
+.pfg-csat-done h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.pfg-csat-done p {
+  font-size: 12.5px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.pfg-csat-done-stars {
+  font-size: 22px;
+  color: #f59e0b;
+  letter-spacing: 3px;
+}
+
+/* Agent Joined Notification Pill */
+.pfg-agent-joined {
+  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%) !important;
+  border: 1px solid #a7f3d0 !important;
+  color: #065f46 !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 6px auto !important;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.12) !important;
+  animation: pfgFadeIn 0.3s ease both;
+}
+
+@keyframes pfgFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
