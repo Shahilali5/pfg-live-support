@@ -135,8 +135,11 @@
     localStorage.removeItem('pfg_agent_token');
     state.token = null;
     state.agent = null;
-    if (state.socket) state.socket.disconnect();
-    window.location.reload();
+    if (state.socket) {
+      try { state.socket.disconnect(); } catch (e) {}
+      state.socket = null;
+    }
+    showLogin();
   }
 
   // --- Socket.IO Real-time Connection ---
@@ -597,15 +600,31 @@
   // --- Bind Event Handlers ---
   function bindEvents() {
     // Login Form Submit
+    // Click to auto-fill demo credentials
+    const demoHint = document.querySelector('.demo-creds-hint');
+    if (demoHint) {
+      demoHint.style.cursor = 'pointer';
+      demoHint.title = 'Click to fill admin credentials';
+      demoHint.addEventListener('click', () => {
+        document.getElementById('loginEmail').value = 'admin@pfg.com';
+        document.getElementById('loginPassword').value = 'admin123';
+      });
+    }
+
     const loginForm = document.getElementById('loginForm');
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
       const errBox = document.getElementById('loginError');
+      const submitBtn = document.getElementById('loginSubmitBtn');
       errBox.style.display = 'none';
 
       try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Signing In...';
+        } 
         const res = await fetch('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -622,8 +641,13 @@
           errBox.style.display = 'block';
         }
       } catch (err) {
-        errBox.textContent = 'Server connection error';
+        errBox.textContent = 'Server connection error. Please ensure server is running.';
         errBox.style.display = 'block';
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Sign In to Console';
+        }
       }
     });
 
@@ -997,7 +1021,6 @@
       alertBox.textContent = `Error: ${e.message}`;
       alertBox.style.display = 'block';
     }
-  }
   }
 
   // Init

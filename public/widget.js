@@ -179,7 +179,7 @@
         <!-- Security Warning Banner -->
         <div class="pfg-security-banner">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-          <div id="pfgSecurityText"><strong>Support Note:</strong> Never share confidential passwords, security keys, or OTPs.</div>
+          <div id="pfgSecurityText"><strong>Security Note:</strong> We will never ask for your UPI PIN, OTP, CVV, or passwords.</div>
         </div>
 
         <!-- Scrollable Messages Area -->
@@ -317,7 +317,9 @@
 
     // Security Notice
     if (secEl && state.config.security_notice) {
-      secEl.innerHTML = `<strong>Security Note:</strong> ${escapeHtml(state.config.security_notice)}`;
+      let note = String(state.config.security_notice).trim();
+      note = note.replace(/^(?:pfg\s*)?(?:security|support)\s*note:\s*/i, '');
+      secEl.innerHTML = `<strong>Security Note:</strong> ${escapeHtml(note)}`;
     }
 
     // Welcome Card

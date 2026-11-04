@@ -72,6 +72,17 @@ class DatabaseService {
       this.memoryData = this.getDefaultStore();
       this.saveJsonStore();
     }
+    // Ensure default admin exists
+    if (!this.memoryData.agents || !Array.isArray(this.memoryData.agents) || this.memoryData.agents.length === 0) {
+      this.memoryData.agents = this.getDefaultStore().agents;
+      this.saveJsonStore();
+    } else {
+      const hasAdmin = this.memoryData.agents.some(a => a.email && a.email.toLowerCase() === 'admin@pfg.com');
+      if (!hasAdmin) {
+        this.memoryData.agents.unshift(this.getDefaultStore().agents[0]);
+        this.saveJsonStore();
+      }
+    }
     console.log('[DB] JSON database loaded. Conversations count:', this.memoryData.conversations.length);
   }
 
@@ -250,7 +261,8 @@ class DatabaseService {
       const res = await this.pgPool.query('SELECT * FROM agents WHERE LOWER(email) = LOWER($1)', [email]);
       return res.rows[0] || null;
     }
-    return this.memoryData.agents.find(a => a.email.toLowerCase() === email.toLowerCase()) || null;
+    const clean = String(email || '').trim().toLowerCase();
+    return (this.memoryData.agents || []).find(a => a.email && a.email.trim().toLowerCase() === clean) || null;
   }
 
   async getAgentById(agentId) {
