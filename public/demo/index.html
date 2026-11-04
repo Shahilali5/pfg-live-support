@@ -3,16 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PFG Gateway - Modern Payment Infrastructure</title>
+  <title>PFG Live Support - Real-Time Embeddable Customer Chat System</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="/demo/demo.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%220%22%20%22100%22%20%22100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
 </head>
 <body>
 
   <!-- Top Announcement Bar -->
   <div class="announcement-bar">
-    <span>🛡️ <strong>PFG Live Support System</strong> is actively running. Test live chatting with the widget on the bottom-right!</span>
-    <a href="/admin" target="_blank" class="admin-quick-link">Open Admin Console ↗</a>
+    <div class="announcement-content">
+      <span class="pulse-indicator"></span>
+      <span><strong>PFG Live Support System</strong> is actively running. Real-time WebSocket engine connected!</span>
+    </div>
+    <div class="announcement-actions">
+      <a href="/docs" class="admin-quick-link"><i class="bi bi-code-slash"></i> API Docs</a>
+      <a href="/admin" target="_blank" class="admin-quick-link highlight"><i class="bi bi-shield-lock"></i> Open Admin Console ↗</a>
+    </div>
   </div>
 
   <!-- Navbar -->
@@ -20,17 +27,22 @@
     <div class="nav-container">
       <div class="brand">
         <div class="brand-shield">
-          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          <i class="bi bi-chat-heart-fill"></i>
         </div>
-        <span class="brand-name">PFG Gateway</span>
-        <span class="badge-fintech">Fintech 2.0</span>
+        <div class="brand-titles">
+          <span class="brand-name">PFG Live Support</span>
+          <span class="badge-fintech">v1.0.0 Open Source</span>
+        </div>
       </div>
 
       <nav class="nav-links">
-        <a href="#checkout">Checkout Demo</a>
-        <a href="#api">API & Webhooks</a>
-        <a href="#embed">Widget Integration</a>
-        <a href="/admin" target="_blank" class="nav-btn-admin">Agent Dashboard ↗</a>
+        <a href="#playground">Interactive Sandbox</a>
+        <a href="#embed">Single-Line Embed</a>
+        <a href="#features">Features</a>
+        <a href="/docs">API Docs</a>
+        <a href="/admin" target="_blank" class="nav-btn-admin">
+          <i class="bi bi-person-badge"></i> Agent Console ↗
+        </a>
       </nav>
     </div>
   </header>
@@ -38,83 +50,131 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-container">
+      <!-- Left Hero Content -->
       <div class="hero-content">
-        <div class="hero-pill">⚡ Instant Settlements & 99.99% Uptime</div>
-        <h1>Next-Gen Payment Gateway with Built-in Real-Time Live Support</h1>
-        <p>Accept cards, UPI, net banking, and cross-border payments with zero friction. Equipped with bank-grade security and instant customer chat assistance.</p>
+        <div class="hero-pill">
+          <span class="pulse-dot"></span>
+          <span>WebSocket Real-Time Chat • Zero Dependencies</span>
+        </div>
+        <h1>Modern, Embeddable Live Chat Support for Any Website</h1>
+        <p>
+          Delight your visitors and customers with instant real-time chat. Drop a single <code>&lt;script&gt;</code> tag into any HTML, React, Next.js, WordPress, or Shopify site. Equipped with a multi-agent admin inbox, live typing indicators, audio notifications, file sharing, and dynamic white-label branding.
+        </p>
 
         <div class="hero-actions">
           <button class="btn-hero-primary" onclick="window.PFGChat && window.PFGChat.open()">
-            💬 Test Customer Chat Widget
+            <i class="bi bi-chat-dots-fill"></i> Open Customer Chat
           </button>
           <a href="/admin" target="_blank" class="btn-hero-secondary">
-            🛡️ Open Admin Console
+            <i class="bi bi-speedometer2"></i> Admin Inbox
+          </a>
+          <a href="/docs" class="btn-hero-secondary">
+            <i class="bi bi-journal-code"></i> API & WebSockets
           </a>
         </div>
 
         <div class="hero-badges">
-          <span>✓ PCI-DSS Level 1 Compliant</span>
-          <span>✓ Real-time WebSockets</span>
-          <span>✓ End-to-End Encryption</span>
+          <span><i class="bi bi-check-circle-fill"></i> &lt;25KB Zero Dependencies</span>
+          <span><i class="bi bi-check-circle-fill"></i> Sub-50ms WebSocket Speed</span>
+          <span><i class="bi bi-check-circle-fill"></i> 100% Free & MIT Licensed</span>
+          <span><i class="bi bi-check-circle-fill"></i> Self-Host in 60s</span>
         </div>
       </div>
 
-      <!-- Simulated Merchant Checkout Card -->
-      <div class="checkout-card" id="checkout">
-        <div class="checkout-header">
-          <div class="checkout-brand">
-            <span class="merchant-dot"></span>
-            <strong>Apex SaaS Technologies</strong>
+      <!-- Right Interactive Sandbox & Playground Card -->
+      <div class="sandbox-card" id="playground">
+        <div class="sandbox-header">
+          <div class="sandbox-brand">
+            <span class="live-dot"></span>
+            <strong>Interactive Widget Sandbox</strong>
           </div>
-          <span class="order-id">INV #9482-PFG</span>
+          <span class="status-badge-connected">● Connected</span>
         </div>
 
-        <div class="checkout-price">
-          <span class="currency">₹</span>
-          <span class="amount">4,999</span>
-          <span class="period">/ annual pro plan</span>
-        </div>
+        <p class="sandbox-intro">
+          Test live real-time customizations directly in this playground. Changes apply instantly to the floating widget below!
+        </p>
 
-        <div class="payment-methods">
-          <button class="method-btn active">⚡ UPI / QR</button>
-          <button class="method-btn">💳 Cards</button>
-          <button class="method-btn">🏦 NetBanking</button>
-        </div>
-
-        <div class="upi-box">
-          <div class="qr-mock">
-            <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3zm2 2v4h4V5zm8-2h8v8h-8zm2 2v4h4V5zM3 13h8v8H3zm2 2v4h4v-4zm13-2h3v2h-3zm-3 2h2v3h-2zm3 3h3v3h-3zm-3 2h2v1h-2zm-2-7h2v2h-2zm4 0h1v2h-1zm-2 5h1v1h-1z"/></svg>
-          </div>
-          <div class="upi-info">
-            <div class="upi-id">pfg.apex@icici</div>
-            <p>Scan with any UPI app (GPay, PhonePe, Paytm)</p>
+        <!-- Company Name Customizer -->
+        <div class="sandbox-field">
+          <label for="demoCompanyName">Support Brand Name</label>
+          <div class="input-with-icon">
+            <i class="bi bi-building"></i>
+            <input type="text" id="demoCompanyName" value="PFG Support" placeholder="Enter company / support name...">
           </div>
         </div>
 
-        <button class="btn-pay" onclick="simulateFailedPayment()">
-          Pay ₹4,999 Securely
-        </button>
+        <!-- Color Preset Customizer -->
+        <div class="sandbox-field">
+          <label>Widget Accent Theme Color</label>
+          <div class="color-presets">
+            <button class="color-btn active" style="--c:#4F46E5" data-color="#4F46E5" title="Electric Indigo"></button>
+            <button class="color-btn" style="--c:#10B981" data-color="#10B981" title="Emerald Green"></button>
+            <button class="color-btn" style="--c:#8B5CF6" data-color="#8B5CF6" title="Vibrant Purple"></button>
+            <button class="color-btn" style="--c:#F43F5E" data-color="#F43F5E" title="Rose Crimson"></button>
+            <button class="color-btn" style="--c:#0EA5E9" data-color="#0EA5E9" title="Sky Blue"></button>
+            <label class="custom-color-picker" title="Pick Custom Color">
+              <input type="color" id="demoColorPicker" value="#4F46E5">
+              <i class="bi bi-eyedropper"></i>
+            </label>
+          </div>
+        </div>
 
-        <div class="security-footer">
-          🔒 256-Bit SSL Encrypted • PFG Live Protection
+        <!-- Position Selector -->
+        <div class="sandbox-field">
+          <label>Widget Screen Position</label>
+          <div class="position-toggle">
+            <button class="pos-btn active" id="posRightBtn" onclick="setDemoPosition('right')">
+              <i class="bi bi-layout-sidebar-reverse"></i> Bottom Right
+            </button>
+            <button class="pos-btn" id="posLeftBtn" onclick="setDemoPosition('left')">
+              <i class="bi bi-layout-sidebar"></i> Bottom Left
+            </button>
+          </div>
+        </div>
+
+        <!-- Playground Action Buttons -->
+        <div class="sandbox-actions">
+          <button class="btn-sandbox primary" onclick="testOpenWidget()">
+            <i class="bi bi-chat-square-text"></i> Open Widget
+          </button>
+          <button class="btn-sandbox" onclick="testSendSampleMessage()">
+            <i class="bi bi-send"></i> Send Test Message
+          </button>
+          <button class="btn-sandbox" onclick="testPlayChime()">
+            <i class="bi bi-bell"></i> Play Chime
+          </button>
+          <button class="btn-sandbox" onclick="testResetDefaults()">
+            <i class="bi bi-arrow-counterclockwise"></i> Reset
+          </button>
+        </div>
+
+        <div class="sandbox-footer">
+          <i class="bi bi-info-circle"></i>
+          <span>Click the floating button at bottom corner or use buttons above to test live chat!</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Embed Instructions & Feature Highlights -->
+  <!-- Embed Instructions Section -->
   <section class="integration-section" id="embed">
     <div class="section-container">
       <div class="section-badge">INTEGRATION IN 30 SECONDS</div>
       <h2>Embed Anywhere With A Single Script Tag</h2>
-      <p>Works flawlessly across React, Next.js, Vue, Shopify, WordPress, or plain HTML without conflicting with host website styles.</p>
+      <p>Works seamlessly across React, Next.js, Vue, WordPress, Shopify, PHP, and static HTML. Zero CSS conflicts with host websites.</p>
 
       <div class="code-box">
         <div class="code-header">
-          <span>HTML Integration</span>
-          <button class="copy-btn" onclick="copySnippet()">Copy Code</button>
+          <div class="code-title">
+            <i class="bi bi-file-earmark-code"></i>
+            <span>HTML Embed Snippet</span>
+          </div>
+          <button class="copy-btn" id="copyBtn" onclick="copySnippet()">
+            <i class="bi bi-clipboard"></i> Copy Snippet
+          </button>
         </div>
-        <pre><code id="embedSnippet">&lt;!-- Place this script before the closing &lt;/body&gt; tag --&gt;
+        <pre><code id="embedSnippet">&lt;!-- Place this single script tag right before your closing &lt;/body&gt; tag --&gt;
 &lt;script
   src="http://localhost:3000/widget.js"
   data-site-id="pfg_gateway_default"
@@ -122,60 +182,222 @@
 &lt;/script&gt;</code></pre>
       </div>
 
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feat-icon">⚡</div>
-          <h3>WebSocket Bidirectional Chat</h3>
-          <p>Instant two-way messaging with sub-100ms latency, automatic reconnect backoff, and heartbeat monitoring.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feat-icon">🛡️</div>
-          <h3>Bank-Grade Security</h3>
-          <p>Strict MIME type upload screening, XSS sanitization, rate-limiting, and automatic warnings against sharing UPI PINs or OTPs.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feat-icon">📑</div>
-          <h3>Multi-Agent Admin Inbox</h3>
-          <p>Assign chats to departments (Payments, Tech, Account), private internal team notes, canned responses, and analytics.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feat-icon">✓✓</div>
-          <h3>Read Receipts & Typing</h3>
-          <p>Real-time typing feedback, sent/delivered/seen status badges, image attachments preview, and audio chimes.</p>
+      <!-- Quick Attribute Guide -->
+      <div class="attr-table-card">
+        <h3>HTML Data Attributes (Zero-Config or Fully Customized)</h3>
+        <div class="attr-table-wrap">
+          <table class="attr-table">
+            <thead>
+              <tr>
+                <th>Attribute</th>
+                <th>Required</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>src</code></td>
+                <td><span class="badge-req">Required</span></td>
+                <td>-</td>
+                <td>Absolute URL to your hosted <code>widget.js</code> endpoint.</td>
+              </tr>
+              <tr>
+                <td><code>data-site-id</code></td>
+                <td><span class="badge-opt">Optional</span></td>
+                <td><code>pfg_gateway_default</code></td>
+                <td>Tenant or website identifier for multi-site routing and separation.</td>
+              </tr>
+              <tr>
+                <td><code>data-company-name</code></td>
+                <td><span class="badge-opt">Optional</span></td>
+                <td><code>PFG Support</code></td>
+                <td>Overrides widget header company / brand title.</td>
+              </tr>
+              <tr>
+                <td><code>data-primary-color</code></td>
+                <td><span class="badge-opt">Optional</span></td>
+                <td><code>#4F46E5</code></td>
+                <td>Primary brand theme hex color for floating launcher and customer bubbles.</td>
+              </tr>
+              <tr>
+                <td><code>data-position</code></td>
+                <td><span class="badge-opt">Optional</span></td>
+                <td><code>right</code></td>
+                <td>Screen placement: <code>right</code> (bottom right) or <code>left</code> (bottom left).</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Feature Highlights -->
+  <section class="features-section" id="features">
+    <div class="section-container">
+      <div class="section-badge">BUILT FOR SPEED AND PRODUCTIVITY</div>
+      <h2>Engineered for High-Converting Customer Communication</h2>
+      <p>Everything you need to deliver world-class live support out of the box with zero third-party subscription fees.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feat-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+          <h3>WebSocket Bidirectional Chat</h3>
+          <p>Instant two-way messaging with sub-50ms latency, automatic reconnect backoff, and heartbeat monitoring powered by Socket.IO.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon"><i class="bi bi-shield-check"></i></div>
+          <h3>Enterprise-Grade Security</h3>
+          <p>Strict MIME type upload screening, XSS sanitization, rate-limiting, and automatic security warnings protecting customer privacy.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon"><i class="bi bi-people-fill"></i></div>
+          <h3>Multi-Agent Admin Inbox</h3>
+          <p>Assign chats to departments (General Support, Tech, Billing), private internal team notes, canned responses, and conversation filters.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon"><i class="bi bi-check2-all"></i></div>
+          <h3>Read Receipts & Typing Indicators</h3>
+          <p>Real-time typing feedback, sent/delivered/seen status badges, image attachments preview, and synthesized Web Audio chimes.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon"><i class="bi bi-palette-fill"></i></div>
+          <h3>Dynamic White-Label Studio</h3>
+          <p>Live Brand Customizer allows real-time edits to colors, logos, titles, greetings, and quick reply pills without redeploying code.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon"><i class="bi bi-star-fill"></i></div>
+          <h3>CSAT Ratings & Analytics</h3>
+          <p>Capture 5-star customer satisfaction ratings after issue resolution with built-in analytics and JSON/CSV transcript exports.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portal Footer -->
   <footer class="portal-footer">
-    <div class="footer-container" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
-      <a href="https://github.com/shahilali5" target="_blank" style="display:flex;align-items:center;gap:8px;color:#a5b4fc;text-decoration:none;font-weight:600;">
-        <img src="https://github.com/shahilali5.png" alt="Shahil Ali" style="width:24px;height:24px;border-radius:50%;">
-        <span>Built by Shahil Ali (@shahilali5)</span>
-      </a>
-      <span>•</span>
-      <span>Open Source MIT License</span>
-      <span>•</span>
-      <a href="/docs" style="color:#94a3b8;text-decoration:none;">API Documentation</a>
-      <span>•</span>
-      <a href="https://github.com/shahilali5/pfg-live-support" target="_blank" style="color:#94a3b8;text-decoration:none;">GitHub Repository</a>
+    <div class="footer-container">
+      <div class="footer-profile">
+        <a href="https://github.com/shahilali5" target="_blank" class="author-badge">
+          <img src="https://github.com/shahilali5.png" alt="Shahil Ali" class="author-img">
+          <div>
+            <div class="author-name">Shahil Ali (@shahilali5)</div>
+            <div class="author-role">Project Maintainer & Lead Architect</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="footer-links">
+        <a href="/admin" target="_blank"><i class="bi bi-shield-lock"></i> Admin Console</a>
+        <a href="/docs"><i class="bi bi-code-slash"></i> API Documentation</a>
+        <a href="https://github.com/shahilali5/pfg-live-support" target="_blank"><i class="bi bi-github"></i> GitHub Repository</a>
+        <span class="license-tag"><i class="bi bi-patch-check"></i> MIT Open Source</span>
+      </div>
     </div>
   </footer>
 
+  <!-- Interactive Sandbox JavaScript -->
   <script>
+    // Dynamically update the embed snippet with the current host and port
+    (function updateSnippetHost() {
+      const codeEl = document.getElementById('embedSnippet');
+      if (codeEl) {
+        const origin = window.location.origin || 'http://localhost:3000';
+        codeEl.innerHTML = `&lt;!-- Place this single script tag right before your closing &lt;/body&gt; tag --&gt;\n&lt;script\n  src="${origin}/widget.js"\n  data-site-id="pfg_gateway_default"\n  async&gt;\n&lt;/script&gt;`;
+      }
+    })();
+
     function copySnippet() {
       const code = document.getElementById('embedSnippet').innerText;
-      navigator.clipboard.writeText(code);
-      alert('Code snippet copied to clipboard!');
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.innerHTML = '<i class="bi bi-check2"></i> Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = '<i class="bi bi-clipboard"></i> Copy Snippet';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
     }
 
-    function simulateFailedPayment() {
+    // Real-Time Playground Controls
+    const nameInput = document.getElementById('demoCompanyName');
+    nameInput.addEventListener('input', (e) => {
+      const val = e.target.value.trim() || 'PFG Support';
+      if (window.PFGChat && window.PFGChat.setConfig) {
+        window.PFGChat.setConfig({ company_name: val });
+      }
+    });
+
+    // Preset color buttons
+    document.querySelectorAll('.color-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const color = btn.getAttribute('data-color');
+        if (window.PFGChat && window.PFGChat.setConfig) {
+          window.PFGChat.setConfig({ brand_color: color });
+        }
+      });
+    });
+
+    // Color picker
+    const picker = document.getElementById('demoColorPicker');
+    picker.addEventListener('input', (e) => {
+      document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+      const color = e.target.value;
+      if (window.PFGChat && window.PFGChat.setConfig) {
+        window.PFGChat.setConfig({ brand_color: color });
+      }
+    });
+
+    function setDemoPosition(pos) {
+      document.getElementById('posRightBtn').classList.toggle('active', pos === 'right');
+      document.getElementById('posLeftBtn').classList.toggle('active', pos === 'left');
+      if (window.PFGChat && window.PFGChat.setConfig) {
+        window.PFGChat.setConfig({ position: pos });
+      }
+    }
+
+    function testOpenWidget() {
       if (window.PFGChat) {
         window.PFGChat.open();
-        window.PFGChat.sendMessage('Hi, I need assistance with transaction INV #9482-PFG for ₹4,999. Can you verify if my UPI payment succeeded?');
+      }
+    }
+
+    function testSendSampleMessage() {
+      if (window.PFGChat) {
+        window.PFGChat.open();
+        window.PFGChat.sendMessage("Hi there! 👋 I am testing the live support widget sandbox from the landing page.");
+      }
+    }
+
+    function testPlayChime() {
+      if (window.PFGChat && window.PFGChat.playChime) {
+        window.PFGChat.playChime();
+      }
+    }
+
+    function testResetDefaults() {
+      nameInput.value = 'PFG Support';
+      setDemoPosition('right');
+      const defaultColor = '#4F46E5';
+      document.querySelectorAll('.color-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-color') === defaultColor);
+      });
+      picker.value = defaultColor;
+      if (window.PFGChat && window.PFGChat.setConfig) {
+        window.PFGChat.setConfig({
+          company_name: 'PFG Support',
+          brand_color: defaultColor,
+          position: 'right'
+        });
       }
     }
   </script>

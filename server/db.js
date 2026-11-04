@@ -80,7 +80,7 @@ class DatabaseService {
       sites: [
         {
           site_id: 'pfg_gateway_default',
-          name: 'PFG Payment Gateway',
+          name: 'PFG Live Support',
           domain: 'pfg-gateway.io',
           webhook_url: '',
           settings: {
@@ -90,18 +90,18 @@ class DatabaseService {
             brand_color: '#4F46E5',
             header_gradient: 'linear-gradient(135deg, #0A1128 0%, #1E1B4B 100%)',
             position: 'right', // 'right' or 'left'
-            security_notice: 'PFG Security Note: We will never ask for your UPI PIN, OTP, CVV, or passwords.',
+            security_notice: 'Support Note: Never share confidential passwords, security keys, or OTPs.',
             welcome_title: '👋 Welcome to Live Support',
-            welcome_subtitle: 'Need help with your payment, webhook, API credentials or refund? Choose a quick option or write to us directly.',
+            welcome_subtitle: 'How can our team help you today? Choose a quick option below or chat with us directly.',
             quick_replies: [
-              { label: '💳 Payment issue', text: 'I need help with my payment status.' },
-              { label: '⚡ API integration', text: 'I have an API integration & webhook question.' },
-              { label: '👤 Account help', text: 'I need help with merchant account verification.' },
-              { label: '🔄 Refund status', text: 'What is the refund turnaround timeline?' }
+              { label: '👋 General Inquiry', text: 'Hi! I have a question about your service.' },
+              { label: '⚡ Product Demo & Pricing', text: 'Can you help me understand your features and pricing?' },
+              { label: '🛠️ Technical Support', text: 'I need help with setup and technical troubleshooting.' },
+              { label: '💬 Talk to an Agent', text: 'I would like to speak directly with a support agent.' }
             ],
             sound_enabled: true,
             operating_hours: '24/7',
-            departments: ['Payments', 'Technical Support', 'Account Support', 'General']
+            departments: ['General Support', 'Technical Support', 'Billing & Sales', 'Account Assistance']
           },
           created_at: new Date().toISOString()
         }
@@ -113,7 +113,7 @@ class DatabaseService {
           email: 'admin@pfg.com',
           password_hash: hashPassword('admin123'),
           role: 'admin',
-          department: 'Payments & Platform Engineering',
+          department: 'Platform Engineering & Support',
           avatar: 'https://github.com/shahilali5.png',
           is_online: true,
           last_seen_at: new Date().toISOString(),
@@ -142,7 +142,7 @@ class DatabaseService {
           response_id: 'cr_1',
           shortcut: '#greeting',
           title: 'Welcome Greeting',
-          text: 'Hello! Thank you for reaching out to PFG Support. My name is {{agent_name}}. How can I assist with your transaction today?',
+          text: 'Hello! Thank you for reaching out to PFG Support. My name is {{agent_name}}. How can our team assist you today?',
           department: 'All',
           created_at: new Date().toISOString()
         },
@@ -150,7 +150,7 @@ class DatabaseService {
           response_id: 'cr_2',
           shortcut: '#tx_lookup',
           title: 'Transaction Verification',
-          text: 'To locate your transaction details, please provide your Transaction ID (e.g. TXN_xxxxxxxx) or Order Reference number. Please remember: NEVER share your UPI PIN, OTP, or CVV.',
+          text: 'To help resolve your issue faster, please provide your account email or reference details. Please remember: NEVER share confidential passwords, PINs, or secret keys.',
           department: 'Payments',
           created_at: new Date().toISOString()
         },
@@ -174,7 +174,7 @@ class DatabaseService {
           response_id: 'cr_5',
           shortcut: '#resolved',
           title: 'Issue Resolved Closing',
-          text: 'I have marked this issue as resolved. Feel free to leave a quick rating below. Thank you for choosing PFG Gateway!',
+          text: 'I have marked this issue as resolved. Feel free to leave a quick rating below. Thank you for reaching out to PFG Live Support!',
           department: 'All',
           created_at: new Date().toISOString()
         }

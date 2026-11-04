@@ -28,9 +28,9 @@
       brand_color: '#4F46E5',
       header_gradient: 'linear-gradient(135deg, #0A1128 0%, #1E1B4B 100%)',
       position: 'right',
-      security_notice: 'PFG Security Note: We will never ask for your UPI PIN, OTP, CVV, or passwords.',
+      security_notice: 'Support Note: Never share confidential passwords, security keys, or OTPs.',
       welcome_title: '👋 Welcome to Live Support',
-      welcome_subtitle: 'Need help with your payment, webhook, API credentials or refund? Choose a quick option or write to us directly.',
+      welcome_subtitle: 'How can our team help you today? Choose a quick option below or chat with us directly.',
       quick_replies: []
     }
   };

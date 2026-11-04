@@ -2,7 +2,7 @@
 
 # ⚡ PFG Live Support
 
-### Embeddable, White-Label Real-Time Customer Chat Platform for Payment Gateways & SaaS
+### Embeddable, White-Label Real-Time Customer Chat Platform for Modern Websites & SaaS
 
 [![GitHub stars](https://img.shields.io/github/stars/shahilali5/pfg-live-support?style=social)](https://github.com/shahilali5/pfg-live-support)
 [![License: MIT](https://img.shields.io/badge/License-MIT-4F46E5.svg)](LICENSE)
@@ -31,7 +31,7 @@
 
 ## What is PFG Live Support?
 
-**PFG Live Support** is an open-source, self-hosted customer support system designed for high-trust web platforms like payment gateways, checkout portals, and fintech SaaS applications.
+**PFG Live Support** is an open-source, self-hosted real-time customer support widget and multi-agent inbox designed for web applications, SaaS platforms, and digital portals.
 
 Most commercial live chat widgets are bloated, inject third-party tracking scripts, or look like generic marketing bots. PFG Live Support is built from scratch with zero client-side dependencies, strict CSS isolation, dual PostgreSQL/JSON database persistence, and an integrated real-time multi-agent console with private team notes.
 
@@ -42,11 +42,11 @@ Most commercial live chat widgets are bloated, inject third-party tracking scrip
 - **Lightweight Floating Widget**: Vanilla JavaScript embed (`widget.js`) under 25KB, styled with scoped CSS so it never conflicts with host site styles.
 - **Bi-directional WebSocket Messaging**: Real-time communication powered by Socket.IO with sub-50ms message latency, reconnect backoff, and heartbeat detection.
 - **A-to-Z White-Label Customizer**: Live brand customizer studio inside the admin console. Change brand colors, logo, company name, launcher position, and FAQ pills in real time without refreshing the page.
-- **Multi-Agent Support Inbox**: Manage multiple customer threads, assign conversations to departments (Payments, Tech, Account), and filter by ticket status.
+- **Multi-Agent Support Inbox**: Manage multiple customer threads, assign conversations to departments (General Support, Tech, Billing), and filter by ticket status.
 - **Private Team Notes (`🔒`)**: Leave internal agent notes that are strictly hidden from customers and never broadcast to customer sockets.
 - **Zero External Audio Dependencies**: Custom notification chime synthesized dynamically via Web Audio API (no 404 MP3 errors).
 - **Dual Storage Engine**: Runs out of the box with zero-config local persistent storage (`data/pfg_store.json`), or points to PostgreSQL in production with automatic schema migrations.
-- **Fintech Security Rules**: Prominent security banner warning customers never to share UPI PINs, CVVs, OTPs, or passwords.
+- **Built-In Security & Privacy**: Prominent security banner reminding customers never to share sensitive passwords, secret keys, or OTPs.
 
 ---
 
@@ -78,7 +78,7 @@ Once started, the server listens at `http://localhost:3000`:
 
 | Interface | URL | Description |
 | :--- | :--- | :--- |
-| **Merchant Checkout Demo** | `http://localhost:3000/` | Interactive payment portal showcasing the live widget |
+| **Interactive Sandbox & Showcase** | `http://localhost:3000/` | Live product playground, interactive customizer & feature showcase |
 | **Admin Support Console** | `http://localhost:3000/admin` | Support agent dashboard & Brand Customizer |
 | **API Documentation** | `http://localhost:3000/docs` | Interactive REST and WebSocket developer documentation |
 | **Embeddable Script** | `http://localhost:3000/widget.js` | Single-line script to embed on any website |
@@ -113,7 +113,7 @@ You can override branding directly from the embed script tag:
   data-logo-url="https://yourdomain.com/logo.png"
   data-primary-color="#2563EB"
   data-position="right"
-  data-security-notice="Acme Security Note: Never share bank OTP or card PINs."
+  data-security-notice="Acme Security Note: Never share confidential passwords or security keys."
   async>
 </script>
 ```
@@ -132,12 +132,12 @@ window.PFGChat.close();
 // Toggle chat window
 window.PFGChat.toggle();
 
-// Trigger automated message (e.g. when checkout fails)
-window.PFGChat.sendMessage("Transaction failed: ERR_UPI_GATEWAY_TIMEOUT");
+// Trigger automated message
+window.PFGChat.sendMessage("Hi! I have a question about getting started with the platform.");
 
 // Dynamically change theme at runtime
 window.PFGChat.setConfig({
-  company_name: "Apex Gateway",
+  company_name: "Acme Cloud",
   brand_color: "#10b981",
   position: "left"
 });
@@ -157,7 +157,7 @@ PFG Live Support lets you rebrand the entire support experience without touching
    - **Custom Logo URL**: Points to your company SVG or PNG image.
    - **Brand Colors**: Interactive color picker with HEX inputs and CSS gradient definitions.
    - **Widget Position**: Choose between Bottom-Right or Bottom-Left.
-   - **Security Advisory Text**: Custom warning banner text against sharing financial secrets.
+   - **Security Advisory Text**: Custom warning banner text against sharing confidential secrets.
    - **Quick Reply FAQ Pills**: Add, edit, or remove clickable shortcut questions.
 4. Preview changes in real time in the sticky mockup on the right.
 5. Click **"Save & Broadcast Live"** — Socket.IO immediately pushes the new styles to all connected customers without reloading.
@@ -174,7 +174,7 @@ chmod +x setup.sh
 # Complete auto-setup (creates secure .env, installs dependencies, runs unit tests)
 ./setup.sh install
 
-# Start the application (auto-detects and uses PM2 if installed)
+# Start the application (prompts for port, auto-detects and frees occupied ports, manages PM2)
 ./setup.sh start
 
 # Stop the application
@@ -306,9 +306,9 @@ Interactive API documentation and WebSocket protocol specifications are availabl
 
 ## Security & Banking Privacy
 
-PFG Live Support is built with strict privacy controls for payment platforms:
+PFG Live Support is built with strict privacy controls for modern platforms:
 
-1. **Anti-Fraud Security Ribbon**: Visible advisory banner on both customer and agent interfaces prohibiting requests for UPI PINs, CVVs, OTPs, or passwords.
+1. **Anti-Fraud Security Ribbon**: Visible advisory banner on both customer and agent interfaces reminding users never to share confidential passwords or secret keys.
 2. **Room & Data Isolation**: Customer sockets can only subscribe to their own conversation room. Administrative events, customer intelligence data, and internal notes are blocked from customer sockets.
 3. **MIME-Type Screening**: File uploads strictly validate against a safe whitelist (`JPEG`, `PNG`, `WEBP`, `GIF`, `PDF`, `TXT`, `JSON`), preventing malicious executable uploads.
 4. **Input Sanitization**: All incoming text payloads are HTML-escaped to prevent Cross-Site Scripting (XSS).

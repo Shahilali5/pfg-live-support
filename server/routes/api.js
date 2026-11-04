@@ -63,7 +63,7 @@ router.get('/public/config', async (req, res) => {
         brand_color: settings.brand_color || '#4F46E5',
         header_gradient: settings.header_gradient || 'linear-gradient(135deg, #0A1128 0%, #1E1B4B 100%)',
         position: settings.position || 'right',
-        security_notice: settings.security_notice || 'PFG Security Note: We will never ask for your UPI PIN, OTP, CVV, or passwords.',
+        security_notice: settings.security_notice || 'Support Note: Never share confidential passwords, security keys, or OTPs.',
         welcome_title: settings.welcome_title || '👋 Welcome to Live Support',
         welcome_subtitle: settings.welcome_subtitle || 'Need help with your payment, webhook, API credentials or refund? Choose a quick option or write to us directly.',
         quick_replies: settings.quick_replies || [],

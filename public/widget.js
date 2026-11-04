@@ -56,14 +56,14 @@
       brand_color: '#4F46E5',
       header_gradient: 'linear-gradient(135deg, #0A1128 0%, #1E1B4B 100%)',
       position: 'right',
-      security_notice: 'PFG Security Note: We will never ask for your UPI PIN, OTP, CVV, or passwords.',
+      security_notice: 'Support Note: Never share confidential passwords, security keys, or OTPs.',
       welcome_title: '👋 Welcome to Live Support',
-      welcome_subtitle: 'Need help with your payment, webhook, API credentials or refund? Choose a quick option or write to us directly.',
+      welcome_subtitle: 'How can our team help you today? Choose a quick option below or chat with us directly.',
       quick_replies: [
-        { label: '💳 Payment issue', text: 'I need help with my payment status.' },
-        { label: '⚡ API integration', text: 'I have an API integration & webhook question.' },
-        { label: '👤 Account help', text: 'I need help with merchant account verification.' },
-        { label: '🔄 Refund status', text: 'What is the refund turnaround timeline?' }
+        { label: '👋 General Inquiry', text: 'Hi! I have a question about your service.' },
+        { label: '⚡ Product Demo & Pricing', text: 'Can you help me understand your features and pricing?' },
+        { label: '🛠️ Technical Support', text: 'I need help with setup and technical troubleshooting.' },
+        { label: '💬 Talk to an Agent', text: 'I would like to speak directly with a support agent.' }
       ]
     }
   };
@@ -179,7 +179,7 @@
         <!-- Security Warning Banner -->
         <div class="pfg-security-banner">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-          <div id="pfgSecurityText"><strong>PFG Security Note:</strong> We will never ask for your UPI PIN, OTP, CVV, or passwords.</div>
+          <div id="pfgSecurityText"><strong>Support Note:</strong> Never share confidential passwords, security keys, or OTPs.</div>
         </div>
 
         <!-- Scrollable Messages Area -->
@@ -187,12 +187,12 @@
           <!-- Welcome card -->
           <div class="pfg-welcome-card" id="pfgWelcomeCard">
             <h4 id="pfgWelcomeTitle">👋 Welcome to PFG Live Support</h4>
-            <p id="pfgWelcomeSub">Need help with your payment, webhook, API credentials or refund? Choose a quick option or write to us directly.</p>
+            <p id="pfgWelcomeSub">How can our team help you today? Choose a quick option below or chat with us directly.</p>
             <div class="pfg-quick-replies" id="pfgQuickReplies">
-              <button class="pfg-pill-btn" data-reply="I need help with my payment status.">💳 Payment issue</button>
-              <button class="pfg-pill-btn" data-reply="I have an API integration & webhook question.">⚡ API integration</button>
-              <button class="pfg-pill-btn" data-reply="I need help with merchant account verification.">👤 Account help</button>
-              <button class="pfg-pill-btn" data-reply="What is the refund turnaround timeline?">🔄 Refund status</button>
+              <button class="pfg-pill-btn" data-reply="Hi! I have a question about your service.">👋 General Inquiry</button>
+              <button class="pfg-pill-btn" data-reply="Can you help me understand your features and pricing?">⚡ Product Demo & Pricing</button>
+              <button class="pfg-pill-btn" data-reply="I need help with setup and technical troubleshooting.">🛠️ Technical Support</button>
+              <button class="pfg-pill-btn" data-reply="I would like to speak directly with a support agent.">💬 Talk to an Agent</button>
             </div>
           </div>
 
@@ -860,7 +860,8 @@
     setConfig: (newConfig) => {
       applyBranding(newConfig);
     },
-    getConfig: () => ({ ...state.config })
+    getConfig: () => ({ ...state.config }),
+    playChime: () => playNotificationChime()
   };
 
   // 12. Main Init Sequence

@@ -23,9 +23,12 @@ async function smokeTest() {
   try {
     const urls = [
       'http://localhost:3000/',
+      'http://localhost:3000/demo/demo.css',
       'http://localhost:3000/widget.js',
       'http://localhost:3000/widget.css',
       'http://localhost:3000/admin',
+      'http://localhost:3000/admin/admin.css',
+      'http://localhost:3000/admin/admin.js',
       'http://localhost:3000/docs',
       'http://localhost:3000/docs/docs.css',
       'http://localhost:3000/api/public/config',
