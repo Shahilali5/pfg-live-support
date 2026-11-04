@@ -76,10 +76,16 @@ app.get('/', (req, res) => {
 
 // Direct convenient static routes & aliases to prevent 404s under any reverse-proxy or path configuration
 app.get(['/widget.js', '/public/widget.js'], (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   res.sendFile(path.join(PUBLIC_DIR, 'widget.js'));
 });
 
 app.get(['/widget.css', '/public/widget.css'], (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   res.sendFile(path.join(PUBLIC_DIR, 'widget.css'));
 });
 

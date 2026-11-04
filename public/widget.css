@@ -363,7 +363,7 @@
 .pfg-msg-row {
   display: flex !important;
   flex-direction: column !important;
-  max-width: 84% !important;
+  max-width: 80% !important;
   min-width: 0 !important;
   box-sizing: border-box !important;
   position: relative !important;
@@ -373,7 +373,7 @@
   align-self: flex-end !important;
   align-items: flex-end !important;
   margin-left: auto !important;
-  margin-right: 2px !important;
+  margin-right: 6px !important;
 }
 
 .pfg-msg-row.pfg-agent {
